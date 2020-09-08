@@ -18,6 +18,8 @@ def inf(ur, _type):
         print("Error: " + str(e))
 
     if _type == "id":
+        with open("debug.log", "w") as d:
+            d.write(str(ur))
         screen_name = group.find("span", "screen-name").text
         ret = ur.find("a", {"data-screenname": screen_name})
         ret = ret.get('data-mentioned-user-id') if ret is not None else None
