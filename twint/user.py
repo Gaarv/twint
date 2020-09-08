@@ -19,7 +19,7 @@ def scrape_user_id(username: str) -> Optional[str]:
     if not connect_link:
         user_id = None
     else:
-        user_id = re.search(r"connect_people\?user_id=(\d+)", connect_link)
+        user_id = re.search(r"connect_people\?user_id=(\d+)", connect_link[0])
         user_id = str(user_id.group())
     return user_id
 

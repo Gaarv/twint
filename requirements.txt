@@ -11,4 +11,4 @@ schedule
 geopy
 fake-useragent
 googletransx
-git+https://github.com/psf/requests-html@da9c8cf498f8819e975acc15bbded6a7a99d4b96
+git+https://github.com/psf/requests-html@026c4e5217cfc8347614148aab331d81402f596b
