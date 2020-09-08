@@ -17,7 +17,7 @@ VERSION = None
 REQUIRED = [
 		'aiohttp', 'aiodns', 'beautifulsoup4', 'cchardet', 
                 'elasticsearch', 'pysocks', 'pandas', 'aiohttp_socks',
-		'schedule', 'geopy', 'fake-useragent', 'googletransx'
+		'schedule', 'geopy', 'fake-useragent', 'googletransx', 'requests-html'
 		]
 
 here = os.path.abspath(os.path.dirname(__file__))
@@ -51,7 +51,8 @@ setup(
 	},
 	install_requires=REQUIRED,
 	dependency_links=[
-		'git+https://github.com/x0rzkov/py-googletrans#egg=googletrans'
+		'git+https://github.com/x0rzkov/py-googletrans#egg=googletrans',
+		'git+https://github.com/psf/requests-html@026c4e5217cfc8347614148aab331d81402f596b'
 	],
 	license='MIT',
 	classifiers=[
