@@ -16,6 +16,7 @@ def scrape_user_id(username: str) -> Optional[str]:
     logme.debug("fallback to requests_html")
     url = f"https://twitter.com/{username}?lang=en"
     r = session.get(url)
+    r.html.render() # render javascript
     logme.debug(r.html.links)
     connect_link = [l for l in r.html.links if "user_id" in l]
     if not connect_link:
