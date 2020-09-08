@@ -1,10 +1,27 @@
+from typing import Optional
+from requests_html import HTMLSession
+import re
 import logging as logme
+
+session = HTMLSession()
+
 
 class user:
     type = "user"
 
     def __init__(self):
         pass
+
+def scrape_user_id(username: str) -> Optional[str]:
+    url = f"https://twitter.com/{username}?lang=en"
+    r = session.get(url)
+    connect_link = [l for l in r.html.links if "user_id" in l]
+    if not connect_link:
+        user_id = None
+    else:
+        user_id = re.search(r"connect_people\?user_id=(\d+)", connect_link)
+        user_id = str(user_id.group())
+    return user_id
 
 def inf(ur, _type):
     logme.debug(__name__+':inf')
@@ -18,11 +35,10 @@ def inf(ur, _type):
         print("Error: " + str(e))
 
     if _type == "id":
-        with open("debug.log", "w") as d:
-            d.write(str(ur))
         screen_name = group.find("span", "screen-name").text
         ret = ur.find("a", {"data-screenname": screen_name})
         ret = ret.get('data-mentioned-user-id') if ret is not None else None
+        ret = scrape_user_id(screen_name) if ret is None else ret
         ret = "" if ret is None else ret
     elif _type == "name":
         ret = group.find("div", "fullname").text.split('\n')[0]
