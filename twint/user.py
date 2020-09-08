@@ -38,9 +38,9 @@ def inf(ur, _type):
 
     if _type == "id":
         screen_name = group.find("span", "screen-name").text
-        ret = ur.find("a", {"data-screenname": screen_name})
-        ret = ret.get('data-mentioned-user-id') if ret is not None else None
-        ret = scrape_user_id(screen_name) if ret is None else ret
+        # ret = ur.find("a", {"data-screenname": screen_name})
+        # ret = ret.get('data-mentioned-user-id') if ret is not None else None
+        ret = scrape_user_id(screen_name)# if ret is None else ret
         ret = "" if ret is None else ret
     elif _type == "name":
         ret = group.find("div", "fullname").text.split('\n')[0]
