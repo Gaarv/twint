@@ -1,10 +1,9 @@
-import asyncio
 from typing import Optional
-from requests_html import AsyncHTMLSession
+from requests_html import HTMLSession
 import re
 import logging as logme
 
-session = AsyncHTMLSession()
+session = HTMLSession()
 
 
 class user:
@@ -16,10 +15,8 @@ class user:
 def scrape_user_id(username: str) -> Optional[str]:
     logme.debug("fallback to requests_html")
     url = f"https://twitter.com/{username}?lang=en"
-    task = asyncio.ensure_future(session.get(url))
-    r = task.result()
+    r = session.get(url)
     logme.debug(r)
-    print(r)
     r.html.render() # render javascript
     logme.debug(r.html.links)
     connect_link = [l for l in r.html.links if "user_id" in l]
