@@ -18,6 +18,8 @@ def scrape_user_id(username: str) -> Optional[str]:
     url = f"https://twitter.com/{username}?lang=en"
     task = asyncio.ensure_future(session.get(url))
     r = task.result()
+    logme.debug(r)
+    print(r)
     r.html.render() # render javascript
     logme.debug(r.html.links)
     connect_link = [l for l in r.html.links if "user_id" in l]
