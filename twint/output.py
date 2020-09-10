@@ -2,7 +2,7 @@ from datetime import datetime
 
 from . import format, get
 from .tweet import Tweet
-from .user import User
+from .user import User, scrape_user_id
 from .storage import db, elasticsearch, write, panda
 
 import logging as logme
@@ -173,6 +173,8 @@ async def Users(u, config, conn):
     global users_list
 
     user = User(u)
+    if user.id is None:
+        user.id = await scrape_user_id(user.username)
     output = format.User(config.Format, user)
 
     if config.Database:

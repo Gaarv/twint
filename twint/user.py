@@ -1,9 +1,9 @@
 from typing import Optional
-from requests_html import HTMLSession
+from requests_html import AsyncHTMLSession
 import re
 import logging as logme
 
-session = HTMLSession()
+asession = AsyncHTMLSession()
 
 
 class user:
@@ -12,12 +12,10 @@ class user:
     def __init__(self):
         pass
 
-def scrape_user_id(username: str) -> Optional[str]:
-    logme.debug("fallback to requests_html")
+async def scrape_user_id(username: str) -> Optional[str]:
     url = f"https://twitter.com/{username}?lang=en"
-    r = session.get(url)
-    logme.debug(r)
-    r.html.render() # render javascript
+    r = await asession.get(url)
+    r.html.arender() # render javascript
     logme.debug(r.html.links)
     connect_link = [l for l in r.html.links if "user_id" in l]
     if not connect_link:
@@ -40,9 +38,8 @@ def inf(ur, _type):
 
     if _type == "id":
         screen_name = group.find("span", "screen-name").text
-        # ret = ur.find("a", {"data-screenname": screen_name})
-        # ret = ret.get('data-mentioned-user-id') if ret is not None else None
-        ret = scrape_user_id(screen_name)# if ret is None else ret
+        ret = ur.find("a", {"data-screenname": screen_name})
+        ret = ret.get('data-mentioned-user-id') if ret is not None else None
         ret = "" if ret is None else ret
     elif _type == "name":
         ret = group.find("div", "fullname").text.split('\n')[0]
